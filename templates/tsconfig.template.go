@@ -1,7 +1,6 @@
 package templates
 
-var tsConfigTemplate = `
- {
+var tsConfigTemplate = `{
   "extends": "@tsconfig/node18/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
