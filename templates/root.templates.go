@@ -15,7 +15,7 @@ func GenerateRoot(userAnswers *models.UserAnswers, cwd string) {
 		fmt.Printf("\nUnable to create package.json file: (%v)", err)
 	}
 
-	pkgJsonTmpl := template.Must(template.New("pksJson").Parse(pkgJsonTemplate))
+	pkgJsonTmpl := template.Must(template.New("pkgjson").Parse(pkgJsonTemplate))
 
 	pkgJsonTmpl.Execute(w, userAnswers)
 	w.Close()
