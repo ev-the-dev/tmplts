@@ -1,5 +1,9 @@
 package models
 
 type UserAnswers struct {
-	Test string
+	AppName    string
+	EsLint     bool
+	Jest       bool
+	Swc        bool
+	Typescript bool
 }

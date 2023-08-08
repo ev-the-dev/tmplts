@@ -23,3 +23,39 @@ var tsConfigTemplate = `{
   "exclude": ["node_modules", "coverage", "__snapshots__", "docs/**", "dist/**"]
 }  
 `
+
+var tsConfigBuildTemplate = `{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "noEmit": false,
+    "target": "ES6",
+    "module": "CommonJS",
+    "esModuleInterop": true
+  },
+  "exclude": [
+    "node_modules",
+    "coverage",
+    "__snapshots__",
+    "docs/**",
+    "dist/**",
+    "e2e/**",
+    "./**/*.test.ts",
+    "./**/*.spec.ts",
+    "./**/*.test.ts",
+    "./**/*.spec.ts"
+  ]
+}`
+
+var tsConfigDevTemplate = `{
+  "extends": "./tsconfig.json",
+  "ts-node": {
+    "require": ["tsconfig-paths/register"],
+    "swc": true,
+    "files": true,
+    "compilerOptions": {
+      "module": "CommonJS",
+      "target": "ES2017"
+    }
+  }
+}`

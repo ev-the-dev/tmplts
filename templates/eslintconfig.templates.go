@@ -1,0 +1,3 @@
+package templates
+
+var eslintConfigTemplate = ``

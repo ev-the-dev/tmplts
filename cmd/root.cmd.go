@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/ehutchllew/template.ts/cmd/models"
@@ -45,16 +44,17 @@ func requestUserInput(questionnaire *models.UserAnswers) {
 	 */
 	dir, _ := os.Getwd()
 	fmt.Printf("\nCWD:::%v", dir)
-	// TODO: need to loop over template answers and generate each file
-	text := ""
-	writeFile(text, fmt.Sprintf("%s/tsconfig.json", dir))
+	userInput := ""
+	writeFiles(userInput, dir)
 }
 
-func writeFile(text string, path string) {
-	createdFile, err := os.Create(path)
-	if err != nil {
-		log.Fatalf("Unable to create file: %v", err)
-	}
+func writeFiles(userInput string, cwd string) {
 	// TODO: Will contain the actual text to write instead of hard coding it inside GenerateRoot
-	templates.GenerateRoot(createdFile)
+	answers := models.UserAnswers{
+		EsLint:     true,
+		Jest:       true,
+		Swc:        true,
+		Typescript: true,
+	}
+	templates.GenerateRoot(&answers, cwd)
 }
