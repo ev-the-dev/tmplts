@@ -2,11 +2,18 @@ package models
 
 type UserAnswers struct {
 	AppName    string
+	EsBuild    bool
 	EsLint     bool
 	Jest       bool
 	Swc        bool
 	Typescript bool
 }
+
+/*
+*
+* JEST
+*
+ */
 
 func (u *UserAnswers) ListJestDevDependencies() []Dependency {
 	deps := []Dependency{}
@@ -32,6 +39,31 @@ func (u *UserAnswers) ListJestDevDependencies() []Dependency {
 	return deps
 }
 
+func (u *UserAnswers) ListJestScripts() []Script {
+	scripts := []Script{
+		{
+			Key:   "test:unit",
+			Value: "npx jest --selectProjects unit --passWithNoTests",
+		},
+		{
+			Key:   "test:integration",
+			Value: "npx jest --selectProjects integration",
+		},
+		{
+			Key:   "test:e2e",
+			Value: "npx jest --selectProjects e2e",
+		},
+	}
+
+	return scripts
+}
+
+/*
+*
+* TYPESCRIPT
+*
+ */
+
 func (u *UserAnswers) ListTypescriptDevDependencies() []Dependency {
 	deps := []Dependency{
 		{
@@ -45,4 +77,48 @@ func (u *UserAnswers) ListTypescriptDevDependencies() []Dependency {
 	}
 
 	return deps
+}
+
+func (u *UserAnswers) ListTypescriptScripts() []Script {
+	scripts := []Script{
+		{
+			Key:   "check",
+			Value: "npx tsc --noEmit",
+		},
+	}
+
+	if !u.Swc && !u.EsBuild {
+		scripts = append(scripts, Script{
+			Key:   "compile",
+			Value: "npx tsc -p ./tsconfig.build.json",
+		})
+	}
+	return scripts
+}
+
+/*
+*
+* ESBUILD
+*
+ */
+
+func (u *UserAnswers) ListEsBuildDevDependencies() []Dependency {
+	deps := []Dependency{
+		{
+			Key:   "esbuild",
+			Value: "^0.19.6",
+		},
+	}
+
+	return deps
+}
+
+func (u *UserAnswers) ListEsBuildScripts() []Script {
+	scripts := []Script{
+		{
+			Key:   "compile",
+			Value: "npx esbuild ./index.ts --bundle --sourcemap --minify --platform=node --format=esm --outdir=dist",
+		},
+	}
+	return scripts
 }

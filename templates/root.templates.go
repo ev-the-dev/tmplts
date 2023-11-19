@@ -27,11 +27,13 @@ func GenerateRoot(userAnswers *models.UserAnswers, cwd string) {
 		tsDevTmpl.Execute(w, "")
 		w.Close()
 
+		pkgJsonConfig.AddScripts(userAnswers.ListTypescriptScripts())
 		pkgJsonConfig.AddDevDependencies(userAnswers.ListTypescriptDevDependencies())
 	}
 
 	// JEST CONFIG
 	if userAnswers.Jest {
+		// TODO: If ESBuild is chosen over SWC, need to change test runner in jestconfig template
 		w, err := os.Create(fmt.Sprintf("%s/jest.config.ts", cwd))
 		if err != nil {
 			fmt.Printf("\nUnable to create jest.config.ts file: (%v)", err)
@@ -42,7 +44,14 @@ func GenerateRoot(userAnswers *models.UserAnswers, cwd string) {
 		jestTmpl.Execute(w, "")
 		w.Close()
 
+		pkgJsonConfig.AddScripts(userAnswers.ListJestScripts())
 		pkgJsonConfig.AddDevDependencies(userAnswers.ListJestDevDependencies())
+	}
+
+	// ESBUILD CONFIG
+	if userAnswers.EsBuild {
+		pkgJsonConfig.AddScripts(userAnswers.ListEsBuildScripts())
+		pkgJsonConfig.AddDevDependencies(userAnswers.ListEsBuildDevDependencies())
 	}
 
 	// SWC CONFIG
