@@ -1,12 +1,12 @@
 package templates
 
 var pkgJsonTemplate = `{
-  "name": {{.AppName}},
+  "name": {{.Name}},
   "scripts": {
     "check": "npx tsc --noEmit",
     "compile": "npx swc src/ -d dist/",
     "test:unit": "npx jest --selectProjects unitTest --passWithNoTests"
   },
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {{.Dependencies}},
+  "devDependencies": {{.DevDependencies}}
 }`

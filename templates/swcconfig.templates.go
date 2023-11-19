@@ -1,25 +1,36 @@
 package templates
 
 var swcConfigTemplate = `{
+  "$schema": "https://json.schemastore.org/swcrc",
+  "module": {
+      "type": "commonjs",
+      "strict": false,
+      "strictMode": true,
+      "lazy": false,
+      "noInterop": false
+  },
   "jsc": {
     "parser": {
       "syntax": "typescript",
       "jsx": false,
-      "dynamicImport": false,
-      "privateMethod": false,
-      "functionBind": false,
-      "exportDefaultFrom": false,
-      "exportNamespaceFrom": false,
+      "dynamicimport": false,
+      "privatemethod": false,
+      "functionbind": false,
+      "exportdefaultfrom": false,
+      "exportnamespacefrom": false,
       "decorators": false,
-      "decoratorsBeforeExport": false,
-      "topLevelAwait": false,
-      "importMeta": true
+      "decoratorsbeforeexport": false,
+      "toplevelawait": false,
+      "importmeta": true
     },
     "transform": null,
     "target": "es2021",
     "loose": false,
-    "externalHelpers": false,
-    "keepClassNames": false
+    "externalhelpers": false,
+    "keepclassnames": false,
+    "isModule": true,
+    /* "minify": true, */
+    /* "sourceMaps": true */
   }
 }
 `

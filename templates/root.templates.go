@@ -9,16 +9,7 @@ import (
 )
 
 func GenerateRoot(userAnswers *models.UserAnswers, cwd string) {
-	// Package.json
-	w, err := os.Create(fmt.Sprintf("%s/package.json", cwd))
-	if err != nil {
-		fmt.Printf("\nUnable to create package.json file: (%v)", err)
-	}
-
-	pkgJsonTmpl := template.Must(template.New("pkgjson").Parse(pkgJsonTemplate))
-
-	pkgJsonTmpl.Execute(w, userAnswers)
-	w.Close()
+	pkgJsonConfig := models.PackageJsonConfig{}
 
 	// TS CONFIG
 	if userAnswers.Typescript {
@@ -35,6 +26,8 @@ func GenerateRoot(userAnswers *models.UserAnswers, cwd string) {
 		tsBuildTmpl.Execute(w, "")
 		tsDevTmpl.Execute(w, "")
 		w.Close()
+
+		pkgJsonConfig.AddDevDependencies(userAnswers.ListTypescriptDevDependencies())
 	}
 
 	// JEST CONFIG
@@ -48,6 +41,8 @@ func GenerateRoot(userAnswers *models.UserAnswers, cwd string) {
 
 		jestTmpl.Execute(w, "")
 		w.Close()
+
+		pkgJsonConfig.AddDevDependencies(userAnswers.ListJestDevDependencies())
 	}
 
 	// SWC CONFIG
@@ -75,4 +70,15 @@ func GenerateRoot(userAnswers *models.UserAnswers, cwd string) {
 		eslintTmpl.Execute(w, "")
 		w.Close()
 	}
+
+	// Package.json
+	w, err := os.Create(fmt.Sprintf("%s/package.json", cwd))
+	if err != nil {
+		fmt.Printf("\nUnable to create package.json file: (%v)", err)
+	}
+
+	pkgJsonTmpl := template.Must(template.New("pkgjson").Parse(pkgJsonTemplate))
+
+	pkgJsonTmpl.Execute(w, pkgJsonConfig)
+	w.Close()
 }
