@@ -51,6 +51,7 @@ func requestUserInput(questionnaire *models.UserAnswers) {
 func writeFiles(userInput string, cwd string) {
 	// TODO: Will contain the actual text to write instead of hard coding it inside GenerateRoot
 	answers := models.UserAnswers{
+		AppName:    "testingggg",
 		EsLint:     true,
 		Jest:       true,
 		Swc:        true,

@@ -9,7 +9,21 @@ import (
 )
 
 func GenerateRoot(userAnswers *models.UserAnswers, cwd string) {
-	pkgJsonConfig := models.PackageJsonConfig{}
+
+	// Init Package.json File
+	w, err := os.Create(fmt.Sprintf("%s/package.json", cwd))
+	if err != nil {
+		fmt.Printf("\nUnable to create package.json file: (%v)", err)
+	}
+	defer w.Close()
+
+	// Init Config to be written later
+	pkgJsonConfig := models.PackageJsonConfig{
+		Name:            userAnswers.AppName,
+		Dependencies:    make(map[string]string),
+		DevDependencies: make(map[string]string),
+		Scripts:         make(map[string]string),
+	}
 
 	// TS CONFIG
 	if userAnswers.Typescript {
@@ -65,11 +79,15 @@ func GenerateRoot(userAnswers *models.UserAnswers, cwd string) {
 
 		swcTmpl.Execute(w, "")
 		w.Close()
+
+		pkgJsonConfig.AddScripts(userAnswers.ListSWCScripts())
+		pkgJsonConfig.AddDevDependencies(userAnswers.ListSWCDevDependencies())
 	}
 
 	// ES LINT
 	if userAnswers.EsLint {
-		w, err := os.Create(fmt.Sprintf("%s/eslint.config.ts", cwd))
+		// TODO: in process of making eslint package -- so would need to change this to just download from github
+		w, err := os.Create(fmt.Sprintf("%s/eslint.config.js", cwd))
 		if err != nil {
 			fmt.Printf("\nUnable to create eslint.config.ts file: (%v)", err)
 		}
@@ -78,16 +96,17 @@ func GenerateRoot(userAnswers *models.UserAnswers, cwd string) {
 
 		eslintTmpl.Execute(w, "")
 		w.Close()
+
+		pkgJsonConfig.AddScripts(userAnswers.ListEsBuildScripts())
+		pkgJsonConfig.AddDevDependencies(userAnswers.ListEsLintDevDependencies())
 	}
 
-	// Package.json
-	w, err := os.Create(fmt.Sprintf("%s/package.json", cwd))
-	if err != nil {
-		fmt.Printf("\nUnable to create package.json file: (%v)", err)
-	}
-
+	// Populate Package.json
 	pkgJsonTmpl := template.Must(template.New("pkgjson").Parse(pkgJsonTemplate))
 
-	pkgJsonTmpl.Execute(w, pkgJsonConfig)
-	w.Close()
+	pkgJsonMarshalled, err := pkgJsonConfig.MarshallData()
+	if err != nil {
+		fmt.Printf("Unable to marshal package json file: (%v)", err)
+	}
+	pkgJsonTmpl.Execute(w, pkgJsonMarshalled)
 }
