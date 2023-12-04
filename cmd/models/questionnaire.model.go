@@ -67,6 +67,10 @@ func (u *UserAnswers) ListJestScripts() []Script {
 func (u *UserAnswers) ListTypescriptDevDependencies() []Dependency {
 	deps := []Dependency{
 		{
+			Key:   "@tsconfig/node18",
+			Value: "^18.2.0",
+		},
+		{
 			Key:   "@types/node",
 			Value: "^18.15.11",
 		},
@@ -168,6 +172,10 @@ func (u *UserAnswers) ListEsLintDevDependencies() []Dependency {
 		{
 			Key:   "eslint",
 			Value: "^8.54.0",
+		},
+		{
+			Key:   "@ev-the-dev/highway",
+			Value: "^0.2.0",
 		},
 	}
 

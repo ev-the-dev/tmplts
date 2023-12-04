@@ -86,7 +86,6 @@ func GenerateRoot(userAnswers *models.UserAnswers, cwd string) {
 
 	// ES LINT
 	if userAnswers.EsLint {
-		// TODO: in process of making eslint package -- so would need to change this to just download from github
 		w, err := os.Create(fmt.Sprintf("%s/eslint.config.js", cwd))
 		if err != nil {
 			fmt.Printf("\nUnable to create eslint.config.ts file: (%v)", err)
@@ -97,7 +96,7 @@ func GenerateRoot(userAnswers *models.UserAnswers, cwd string) {
 		eslintTmpl.Execute(w, "")
 		w.Close()
 
-		pkgJsonConfig.AddScripts(userAnswers.ListEsBuildScripts())
+		pkgJsonConfig.AddScripts(userAnswers.ListEsLintScripts())
 		pkgJsonConfig.AddDevDependencies(userAnswers.ListEsLintDevDependencies())
 	}
 

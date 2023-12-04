@@ -6,12 +6,11 @@ var tsConfigTemplate = `{
     "baseUrl": ".",
     "rootDir": ".",
     "outDir": "dist",
-    "moduleResolution": "node",
-    "module": "ESNext",
+    "moduleResolution": "nodenext",
+    "module": "nodenext",
     "target": "ES6",
     "paths": {
-      "/opt/nodejs/*": ["layers/base-layer/nodejs/*"],
-      "*": ["layers/base-layer/nodejs/node_modules/*"]
+      "@example/*": ["some/relative/path/*"],
     },
     "noEmit": true,
     "resolveJsonModule": true,
@@ -30,7 +29,7 @@ var tsConfigBuildTemplate = `{
     "outDir": "dist",
     "noEmit": false,
     "target": "ES6",
-    "module": "CommonJS",
+    "module": "nodenext",
     "esModuleInterop": true
   },
   "exclude": [
