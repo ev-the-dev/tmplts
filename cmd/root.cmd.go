@@ -5,12 +5,13 @@ import (
 	"os"
 
 	"github.com/ehutchllew/template.ts/cmd/models"
-	"github.com/ehutchllew/template.ts/templates"
+	"github.com/ehutchllew/template.ts/cmd/utils"
 	"github.com/spf13/cobra"
 )
 
 var (
 	rootCmd = &cobra.Command{
+		Use: "tmplts",
 		Run: func(cmd *cobra.Command, args []string) {
 			printWelcomeMessage()
 			userAnswers := &models.UserAnswers{}
@@ -27,7 +28,7 @@ func Execute() {
 }
 
 func init() {
-	// rootCmd.Flags().StringP("test", "t", "iono", "testingg")
+	rootCmd.Flags().BoolP("all", "a", false, "tmplts -a")
 }
 
 func printWelcomeMessage() {
@@ -44,8 +45,8 @@ func requestUserInput(questionnaire *models.UserAnswers) {
 	 */
 	dir, _ := os.Getwd()
 	fmt.Printf("\nCWD:::%v", dir)
-	userInput := ""
-	writeFiles(userInput, dir)
+	// userInput := ""
+	// writeFiles(userInput, dir)
 }
 
 func writeFiles(userInput string, cwd string) {
@@ -57,5 +58,5 @@ func writeFiles(userInput string, cwd string) {
 		Swc:        true,
 		Typescript: true,
 	}
-	templates.GenerateRoot(&answers, cwd)
+	utils.GenerateAll(&answers, cwd)
 }

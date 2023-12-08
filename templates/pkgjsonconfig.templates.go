@@ -1,6 +1,6 @@
 package templates
 
-var pkgJsonTemplate = `{
+var PkgJsonTemplate = `{
   "name": {{.Name}},
   "scripts": {{.Scripts}},
   "dependencies": {{.Dependencies}},

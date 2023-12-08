@@ -1,6 +1,6 @@
 package templates
 
-var swcConfigTemplate = `{
+var SwcConfigTemplate = `{
   "$schema": "https://json.schemastore.org/swcrc",
   "module": {
       "type": "commonjs",

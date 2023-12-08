@@ -1,6 +1,6 @@
 package templates
 
-var tsConfigTemplate = `{
+var TsConfigTemplate = `{
   "extends": "@tsconfig/node18/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
@@ -23,7 +23,7 @@ var tsConfigTemplate = `{
 }  
 `
 
-var tsConfigBuildTemplate = `{
+var TsConfigBuildTemplate = `{
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",
@@ -46,7 +46,7 @@ var tsConfigBuildTemplate = `{
   ]
 }`
 
-var tsConfigDevTemplate = `{
+var TsConfigDevTemplate = `{
   "extends": "./tsconfig.json",
   "ts-node": {
     "require": ["tsconfig-paths/register"],
