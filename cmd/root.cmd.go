@@ -12,10 +12,11 @@ import (
 var (
 	rootCmd = &cobra.Command{
 		Use: "tmplts",
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			printWelcomeMessage()
-			userAnswers := &models.UserAnswers{}
-			requestUserInput(userAnswers)
+			checkForFlags(cmd)
+
+			return nil
 		},
 	}
 )
@@ -25,6 +26,28 @@ func Execute() {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
+}
+
+func checkForFlags(cmd *cobra.Command) error {
+	allFlag, allFlagErr := cmd.Flags().GetBool("all")
+	if allFlagErr != nil {
+		return allFlagErr
+	}
+
+	if allFlag {
+		questionnaire := models.UserAnswers{
+			EsLint:     true,
+			Jest:       true,
+			Swc:        true,
+			Typescript: true,
+		}
+
+		writeFiles(&questionnaire)
+	} else {
+		requestUserInput()
+	}
+
+	return nil
 }
 
 func init() {
@@ -39,17 +62,15 @@ func printWelcomeMessage() {
 	fmt.Println("**********************************************")
 }
 
-func requestUserInput(questionnaire *models.UserAnswers) {
+func requestUserInput() {
 	/*
 	 * To be filled out with custom functionality in the future
 	 */
-	dir, _ := os.Getwd()
-	fmt.Printf("\nCWD:::%v", dir)
-	// userInput := ""
-	// writeFiles(userInput, dir)
+	// questionnaire := models.UserAnswers{}
+	// writeFiles(&questionnaire)
 }
 
-func writeFiles(userInput string, cwd string) {
+func writeFiles(userInput *models.UserAnswers) {
 	// TODO: Will contain the actual text to write instead of hard coding it inside GenerateRoot
 	answers := models.UserAnswers{
 		AppName:    "testingggg",
@@ -58,5 +79,8 @@ func writeFiles(userInput string, cwd string) {
 		Swc:        true,
 		Typescript: true,
 	}
-	utils.GenerateAll(&answers, cwd)
+
+	dir, _ := os.Getwd()
+	fmt.Printf("\nCWD:::%v", dir)
+	utils.GenerateAll(&answers, dir)
 }
