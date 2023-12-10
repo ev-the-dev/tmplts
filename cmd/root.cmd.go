@@ -6,6 +6,7 @@ import (
 
 	"github.com/ehutchllew/template.ts/cmd/models"
 	"github.com/ehutchllew/template.ts/cmd/utils"
+	"github.com/ehutchllew/template.ts/tui"
 	"github.com/spf13/cobra"
 )
 
@@ -66,21 +67,14 @@ func requestUserInput() {
 	/*
 	 * To be filled out with custom functionality in the future
 	 */
-	// questionnaire := models.UserAnswers{}
+	questionnaire := models.UserAnswers{}
+	wizardAnswers := tui.New(&questionnaire)
+	fmt.Printf("WIZARD ANSWERS::: \n%+v", wizardAnswers)
 	// writeFiles(&questionnaire)
 }
 
 func writeFiles(userInput *models.UserAnswers) {
-	// TODO: Will contain the actual text to write instead of hard coding it inside GenerateRoot
-	answers := models.UserAnswers{
-		AppName:    "testingggg",
-		EsLint:     true,
-		Jest:       true,
-		Swc:        true,
-		Typescript: true,
-	}
-
 	dir, _ := os.Getwd()
 	fmt.Printf("\nCWD:::%v", dir)
-	utils.GenerateAll(&answers, dir)
+	utils.GenerateAll(userInput, dir)
 }
