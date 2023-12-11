@@ -1,5 +1,15 @@
 package models
 
+type ToolNames int8
+
+const (
+	ES_BUILD ToolNames = iota
+	ES_LINT
+	JEST
+	SWC
+	TYPESCRIPT
+)
+
 type UserAnswers struct {
 	AppName    string
 	EsBuild    bool

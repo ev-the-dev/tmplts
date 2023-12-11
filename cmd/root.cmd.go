@@ -67,8 +67,7 @@ func requestUserInput() {
 	/*
 	 * To be filled out with custom functionality in the future
 	 */
-	questionnaire := models.UserAnswers{}
-	wizardAnswers := tui.New(&questionnaire)
+	wizardAnswers := tui.New()
 	fmt.Printf("WIZARD ANSWERS::: \n%+v", wizardAnswers)
 	// writeFiles(&questionnaire)
 }
