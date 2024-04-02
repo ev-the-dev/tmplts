@@ -7,7 +7,7 @@ import (
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/ehutchllew/template.ts/cmd/models"
+	"github.com/ev-the-dev/tmplts/cmd/models"
 )
 
 type WizardAnswers struct {

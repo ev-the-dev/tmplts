@@ -183,7 +183,7 @@ func (u *UserAnswers) ListEsLintDevDependencies() []Dependency {
 		},
 		{
 			Key:   "@ev-the-dev/highway",
-			Value: "^0.2.0",
+			Value: "^0.2.2",
 		},
 	}
 

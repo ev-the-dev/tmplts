@@ -1,6 +1,6 @@
-module github.com/ehutchllew/template.ts
+module github.com/ev-the-dev/tmplts
 
-go 1.20
+go 1.22
 
 require (
 	github.com/charmbracelet/bubbles v0.16.1
