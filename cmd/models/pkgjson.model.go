@@ -1,8 +1,8 @@
 package models
 
 import (
+	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 type Dependency struct {
@@ -23,10 +23,7 @@ type PackageJsonConfig struct {
 }
 
 type PackageJsonMarshalled struct {
-	Name            string
-	Dependencies    string
-	DevDependencies string
-	Scripts         string
+	JSON string
 }
 
 func (p *PackageJsonConfig) AddDependencies(deps []Dependency) error {
@@ -54,37 +51,15 @@ func (p *PackageJsonConfig) AddScripts(scripts []Script) error {
 }
 
 func (p *PackageJsonConfig) MarshallData() (*PackageJsonMarshalled, error) {
-	// FIXME: Think about Error Wrapping -- or something to better expose all possible errors in this chain
+	buffer := &bytes.Buffer{}
+	encoder := json.NewEncoder(buffer)
+	encoder.SetEscapeHTML(false)
 
-	name, nameErr := json.MarshalIndent(p.Name, "\t", "")
-	if nameErr != nil {
-		fmt.Printf("Unable to marshal package.json name: (%v)", nameErr)
-		return nil, nameErr
-	}
-
-	deps, depsErr := json.MarshalIndent(p.Dependencies, "\t", "\t")
-	if depsErr != nil {
-		fmt.Printf("Unable to marshal package.json dependencies: (%v)", depsErr)
-		return nil, depsErr
-	}
-
-	devDeps, devDepsErr := json.MarshalIndent(p.DevDependencies, "\t", "\t")
-	if devDepsErr != nil {
-		fmt.Printf("Unable to marshal package.json devDependencies: (%v)", devDepsErr)
-		return nil, devDepsErr
-	}
-
-	scripts, scriptsErr := json.MarshalIndent(p.Scripts, "\t", "\t")
-	if scriptsErr != nil {
-		fmt.Printf("Unable to marshal package.json scripts : (%v)", scriptsErr)
-		return nil, scriptsErr
-	}
+	encoder.SetIndent("", "\t")
+	encoder.Encode(p)
 
 	pkgJsonMarshalled := PackageJsonMarshalled{
-		Name:            string(name),
-		Dependencies:    string(deps),
-		DevDependencies: string(devDeps),
-		Scripts:         string(scripts),
+		JSON: buffer.String(),
 	}
 
 	return &pkgJsonMarshalled, nil

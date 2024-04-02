@@ -2,7 +2,9 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"os"
+	"path"
 
 	"github.com/ehutchllew/template.ts/cmd/models"
 	"github.com/ehutchllew/template.ts/cmd/utils"
@@ -36,7 +38,14 @@ func checkForFlags(cmd *cobra.Command) error {
 	}
 
 	if allFlag {
+		dir, err := os.Getwd()
+		if err != nil {
+			log.Fatalf("Unable to Get Working Directory: %v", err)
+		}
+		defaultAppName := path.Base(dir)
+
 		questionnaire := models.UserAnswers{
+			AppName:    defaultAppName,
 			EsLint:     true,
 			Jest:       true,
 			Swc:        true,
@@ -70,7 +79,10 @@ func requestUserInput() {
 }
 
 func writeFiles(userInput *models.UserAnswers) {
-	dir, _ := os.Getwd()
+	dir, err := os.Getwd()
+	if err != nil {
+		log.Fatalf("Unable to Get Working Directory: %v", err)
+	}
 	fmt.Printf("\nCWD:::%v", dir)
 	utils.GenerateAll(userInput, dir)
 }
