@@ -2,7 +2,15 @@
 Package to bootstrap typescript projects with eslint, swc/esbuild, and jest configurations
 
 ## Current Functionality
-Static generation of my preferred TypeScript project config
+### Auto-Generate All Files
+```sh
+$tmplts -a
+```
+
+### Selectively Choose Files
+```sh
+$tmplts
+```
 
 ## Roadmap
 * Interactive CLI/TUI

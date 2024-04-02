@@ -52,7 +52,7 @@ func checkForFlags(cmd *cobra.Command) error {
 }
 
 func init() {
-	rootCmd.Flags().BoolP("all", "a", false, "tmplts -a")
+	rootCmd.Flags().BoolP("all", "a", false, "Auto-Generates all config files")
 }
 
 func printWelcomeMessage() {

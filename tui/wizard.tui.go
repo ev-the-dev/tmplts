@@ -96,13 +96,41 @@ func (w WizardAnswers) View() string {
 			w.appNameTextInput.Value(),
 			w.styles.InputField.Render(w.appNameTextInput.View()),
 		)
+	} else {
+		// header
+		s := "Select all the configurations that you would like to create\n\n"
+		for key, value := range w.selected {
+			cursor := " "
+			if w.cursor == key {
+				cursor = ">"
+			}
+
+			selected := " "
+			if value {
+				selected = "X"
+			}
+
+			keyName := mapSelectedKeyToName(key)
+			s += renderRow(cursor, selected, keyName)
+		}
+
+		return s
 	}
+}
 
-	// header
-	// s := "Select all the configurations that you would like to create\n\n"
-
-	// cursor := " "
-
+func mapSelectedKeyToName(key models.ToolNames) string {
+	switch key {
+	case models.ES_BUILD:
+		return "ESBuild"
+	case models.ES_LINT:
+		return "ESLint"
+	case models.JEST:
+		return "Jest"
+	case models.SWC:
+		return "SWC"
+	case models.TYPESCRIPT:
+		return "TypeScript"
+	}
 	return ""
 }
 
@@ -147,8 +175,9 @@ func (w WizardAnswers) updateTextInput(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "ctrl+c":
 			return w, tea.Quit
 		case "enter":
-			w.appNameTextInput.SetValue("done!")
-			return w, nil
+			w.appName = w.appNameTextInput.Value()
+			w.appNameTextInput.Blur()
+			return w, cmd
 		}
 	}
 	return w, cmd
