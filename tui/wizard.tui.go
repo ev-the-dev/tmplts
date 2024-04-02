@@ -15,9 +15,9 @@ type WizardAnswers struct {
 	appNameTextInput         textinput.Model
 	appNameTextInputRendered bool
 
-	cursor models.ToolNames
+	cursor int
 
-	selected map[models.ToolNames]bool
+	selected map[int]bool
 	styles   *Styles
 
 	height int
@@ -32,7 +32,7 @@ func New() *models.UserAnswers {
 	defer logFile.Close()
 
 	w := WizardAnswers{
-		selected: map[models.ToolNames]bool{
+		selected: map[int]bool{
 			models.ES_BUILD:   false,
 			models.ES_LINT:    false,
 			models.JEST:       false,
@@ -98,19 +98,21 @@ func (w WizardAnswers) View() string {
 		)
 	} else {
 		// header
-		s := "Select all the configurations that you would like to create\n\n"
-		for key, value := range w.selected {
+		s := "\nSelect all the configurations that you would like to generate:\n\n"
+
+		// have to do it this way because maps don't guarantee insertion order
+		for i := 0; i < len(w.selected); i++ {
 			cursor := " "
-			if w.cursor == key {
+			if w.cursor == i {
 				cursor = ">"
 			}
 
 			selected := " "
-			if value {
+			if v, ok := w.selected[i]; ok && v {
 				selected = "X"
 			}
 
-			keyName := mapSelectedKeyToName(key)
+			keyName := mapSelectedKeyToName(i)
 			s += renderRow(cursor, selected, keyName)
 		}
 
@@ -118,7 +120,7 @@ func (w WizardAnswers) View() string {
 	}
 }
 
-func mapSelectedKeyToName(key models.ToolNames) string {
+func mapSelectedKeyToName(key int) string {
 	switch key {
 	case models.ES_BUILD:
 		return "ESBuild"
