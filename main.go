@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/ehutchllew/template.ts/cmd"
+	"github.com/ev-the-dev/confits/cmd"
 )
 
 func main() {

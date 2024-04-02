@@ -1,4 +1,4 @@
-module github.com/ehutchllew/template.ts
+module github.com/ev-the-dev/confits
 
 go 1.22
 
