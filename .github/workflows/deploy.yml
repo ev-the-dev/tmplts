@@ -24,4 +24,4 @@ jobs:
         run: go get .
 
       - name: Build
-        run: go build -v ./... -o tmplts
+        run: go build -v ./... -o bin/confits
