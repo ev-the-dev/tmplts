@@ -64,12 +64,9 @@ func printWelcomeMessage() {
 }
 
 func requestUserInput() {
-	/*
-	 * To be filled out with custom functionality in the future
-	 */
 	wizardAnswers := tui.New()
 	fmt.Printf("WIZARD ANSWERS::: \n%+v", wizardAnswers)
-	// writeFiles(&questionnaire)
+	writeFiles(wizardAnswers)
 }
 
 func writeFiles(userInput *models.UserAnswers) {

@@ -32,6 +32,7 @@ func New() *models.UserAnswers {
 	defer logFile.Close()
 
 	w := WizardAnswers{
+		appName: "",
 		selected: map[int]bool{
 			models.ES_BUILD:   false,
 			models.ES_LINT:    false,
@@ -43,18 +44,20 @@ func New() *models.UserAnswers {
 	}
 
 	p := tea.NewProgram(w)
-	if _, err := p.Run(); err != nil {
+	m, err := p.Run()
+	if err != nil {
 		log.Fatalf("Alas, there's been an error starting bubbletea: %v", err)
 	}
 
-	log.Println("have we hit this yet????")
+	updatedW := m.(WizardAnswers)
+
 	userAnswers := &models.UserAnswers{
-		AppName:    w.appName,
-		EsBuild:    w.selected[models.ES_BUILD],
-		EsLint:     w.selected[models.ES_LINT],
-		Jest:       w.selected[models.JEST],
-		Swc:        w.selected[models.SWC],
-		Typescript: w.selected[models.TYPESCRIPT],
+		AppName:    updatedW.appName,
+		EsBuild:    updatedW.selected[models.ES_BUILD],
+		EsLint:     updatedW.selected[models.ES_LINT],
+		Jest:       updatedW.selected[models.JEST],
+		Swc:        updatedW.selected[models.SWC],
+		Typescript: updatedW.selected[models.TYPESCRIPT],
 	}
 
 	return userAnswers
@@ -170,7 +173,6 @@ func (w WizardAnswers) updateSelector(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (w WizardAnswers) updateTextInput(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmd tea.Cmd
 	w.appNameTextInput, cmd = w.appNameTextInput.Update(msg)
-	log.Printf("msg:%+v", msg)
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.String() {
