@@ -1,4 +1,4 @@
-# template.ts
+# TmplTS
 Package to bootstrap TypeScript projects with ESLint, SWC or ESBuild, and Jest configurations.
 Additionally it will include appropriate scripts and dependencies in the `package.json` file for each generated configuration file.
 

@@ -6,9 +6,9 @@ import (
 	"os"
 	"path"
 
-	"github.com/ev-the-dev/confits/cmd/models"
-	"github.com/ev-the-dev/confits/cmd/utils"
-	"github.com/ev-the-dev/confits/tui"
+	"github.com/ev-the-dev/tmplts/cmd/models"
+	"github.com/ev-the-dev/tmplts/cmd/utils"
+	"github.com/ev-the-dev/tmplts/tui"
 	"github.com/spf13/cobra"
 )
 
@@ -67,7 +67,7 @@ func init() {
 func printWelcomeMessage() {
 	fmt.Println("**********************************************")
 	fmt.Println("*                                            *")
-	fmt.Println("*   Welcome to Confits! Let's get started.   *")
+	fmt.Println("*   Welcome to TmplTS! Let's get started.    *")
 	fmt.Println("*                                            *")
 	fmt.Println("**********************************************")
 }

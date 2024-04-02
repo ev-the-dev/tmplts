@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/ev-the-dev/confits/cmd"
+	"github.com/ev-the-dev/tmplts/cmd"
 )
 
 func main() {

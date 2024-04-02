@@ -6,8 +6,8 @@ import (
 	"sync"
 	"text/template"
 
-	"github.com/ev-the-dev/confits/cmd/models"
-	ct "github.com/ev-the-dev/confits/templates"
+	"github.com/ev-the-dev/tmplts/cmd/models"
+	ct "github.com/ev-the-dev/tmplts/templates"
 )
 
 // TODO: If package.json already exists: unmarshal, add these changes, then marshal again. That way we don't overwrite entire files.

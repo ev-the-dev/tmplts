@@ -1,4 +1,4 @@
-module github.com/ev-the-dev/confits
+module github.com/ev-the-dev/tmplts
 
 go 1.22
 
