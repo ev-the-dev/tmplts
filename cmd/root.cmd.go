@@ -52,7 +52,7 @@ func checkForFlags(cmd *cobra.Command) error {
 }
 
 func init() {
-	rootCmd.Flags().BoolP("all", "a", false, "tmplts -a")
+	rootCmd.Flags().BoolP("all", "a", false, "Auto-Generates all config files")
 }
 
 func printWelcomeMessage() {
@@ -64,12 +64,9 @@ func printWelcomeMessage() {
 }
 
 func requestUserInput() {
-	/*
-	 * To be filled out with custom functionality in the future
-	 */
 	wizardAnswers := tui.New()
 	fmt.Printf("WIZARD ANSWERS::: \n%+v", wizardAnswers)
-	// writeFiles(&questionnaire)
+	writeFiles(wizardAnswers)
 }
 
 func writeFiles(userInput *models.UserAnswers) {

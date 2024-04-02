@@ -15,9 +15,9 @@ type WizardAnswers struct {
 	appNameTextInput         textinput.Model
 	appNameTextInputRendered bool
 
-	cursor models.ToolNames
+	cursor int
 
-	selected map[models.ToolNames]bool
+	selected map[int]bool
 	styles   *Styles
 
 	height int
@@ -32,7 +32,8 @@ func New() *models.UserAnswers {
 	defer logFile.Close()
 
 	w := WizardAnswers{
-		selected: map[models.ToolNames]bool{
+		appName: "",
+		selected: map[int]bool{
 			models.ES_BUILD:   false,
 			models.ES_LINT:    false,
 			models.JEST:       false,
@@ -43,18 +44,20 @@ func New() *models.UserAnswers {
 	}
 
 	p := tea.NewProgram(w)
-	if _, err := p.Run(); err != nil {
+	m, err := p.Run()
+	if err != nil {
 		log.Fatalf("Alas, there's been an error starting bubbletea: %v", err)
 	}
 
-	log.Println("have we hit this yet????")
+	updatedW := m.(WizardAnswers)
+
 	userAnswers := &models.UserAnswers{
-		AppName:    w.appName,
-		EsBuild:    w.selected[models.ES_BUILD],
-		EsLint:     w.selected[models.ES_LINT],
-		Jest:       w.selected[models.JEST],
-		Swc:        w.selected[models.SWC],
-		Typescript: w.selected[models.TYPESCRIPT],
+		AppName:    updatedW.appName,
+		EsBuild:    updatedW.selected[models.ES_BUILD],
+		EsLint:     updatedW.selected[models.ES_LINT],
+		Jest:       updatedW.selected[models.JEST],
+		Swc:        updatedW.selected[models.SWC],
+		Typescript: updatedW.selected[models.TYPESCRIPT],
 	}
 
 	return userAnswers
@@ -96,13 +99,43 @@ func (w WizardAnswers) View() string {
 			w.appNameTextInput.Value(),
 			w.styles.InputField.Render(w.appNameTextInput.View()),
 		)
+	} else {
+		// header
+		s := "\nSelect all the configurations that you would like to generate:\n\n"
+
+		// have to do it this way because maps don't guarantee insertion order
+		for i := 0; i < len(w.selected); i++ {
+			cursor := " "
+			if w.cursor == i {
+				cursor = ">"
+			}
+
+			selected := " "
+			if v, ok := w.selected[i]; ok && v {
+				selected = "X"
+			}
+
+			keyName := mapSelectedKeyToName(i)
+			s += renderRow(cursor, selected, keyName)
+		}
+
+		return s
 	}
+}
 
-	// header
-	// s := "Select all the configurations that you would like to create\n\n"
-
-	// cursor := " "
-
+func mapSelectedKeyToName(key int) string {
+	switch key {
+	case models.ES_BUILD:
+		return "ESBuild"
+	case models.ES_LINT:
+		return "ESLint"
+	case models.JEST:
+		return "Jest"
+	case models.SWC:
+		return "SWC"
+	case models.TYPESCRIPT:
+		return "TypeScript"
+	}
 	return ""
 }
 
@@ -140,15 +173,15 @@ func (w WizardAnswers) updateSelector(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (w WizardAnswers) updateTextInput(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmd tea.Cmd
 	w.appNameTextInput, cmd = w.appNameTextInput.Update(msg)
-	log.Printf("msg:%+v", msg)
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "ctrl+c":
 			return w, tea.Quit
 		case "enter":
-			w.appNameTextInput.SetValue("done!")
-			return w, nil
+			w.appName = w.appNameTextInput.Value()
+			w.appNameTextInput.Blur()
+			return w, cmd
 		}
 	}
 	return w, cmd

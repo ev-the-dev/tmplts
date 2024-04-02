@@ -1,9 +1,7 @@
 package models
 
-type ToolNames int8
-
 const (
-	ES_BUILD ToolNames = iota
+	ES_BUILD int = iota
 	ES_LINT
 	JEST
 	SWC
