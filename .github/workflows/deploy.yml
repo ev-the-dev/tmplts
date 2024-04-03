@@ -40,7 +40,8 @@ jobs:
       run:
         working-directory: ./npm
     permissions:
-      packages: write
+      contents: read
+      id-token: write
 
     steps:
       - uses: actions/checkout@v4
@@ -49,7 +50,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: latest
-          registry-url: https://npm.pkg.github.com
+          registry-url: https://registry.npmjs.org/
           scope: "@ev-the-dev"
 
       - name: Download Binary
@@ -58,8 +59,8 @@ jobs:
           name: go_binary
           path: npm/tmplts
 
-      - name: Print Dir Contents
+      - name: Publish to NPM Registry
         run: |
-          pwd
-          ls -aL ../
-          ls -aL
+          npm publish --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
