@@ -4,8 +4,8 @@ on:
   release:
     types:
       - "published"
-  pull_request:
-    branches: ["main"]
+  # pull_request:
+  #   branches: ["main"]
 
 jobs:
   build-binary:
@@ -70,8 +70,8 @@ jobs:
           ls -alFG
           ls -alFG ../
 
-      # - name: Publish to NPM Registry
-      #   run: |
-      #     npm publish --provenance
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish to NPM Registry
+        run: |
+          npm publish --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
