@@ -20,7 +20,7 @@ $ tmplts
 
 ## Roadmap
 * Add Prettier and its config file.
-* Configure GitHub actions to deploy binaries.
+* Add more CLI options, like --version/-v.
 * More robust configurations: able to selectively add rulesets to each config, instead of having to opt into the entire file as is.
 * Automated scripts: go ahead and include any necessary, or quality of life, scripts to get an app up-and-running with minimal effort.
 * Add functionality to include popular libraries:
