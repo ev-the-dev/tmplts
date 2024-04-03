@@ -43,6 +43,8 @@ jobs:
       packages: write
 
     steps:
+      - uses: actions/checkout@v4
+
       - name: Set Up Node
         uses: actions/setup-node@v4
         with:
