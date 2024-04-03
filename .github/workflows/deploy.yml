@@ -4,6 +4,8 @@ on:
   release:
     types:
       - "published"
+  # pull_request:
+  #   branches: ["main"]
 
 jobs:
   build-binary:
@@ -61,7 +63,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: go_binary
-          path: npm/tmplts
+          path: npm
+
+      - name: TEST
+        run: |
+          ls -alFG
+          ls -alFG ../
 
       - name: Publish to NPM Registry
         run: |
