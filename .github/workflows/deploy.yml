@@ -1,11 +1,9 @@
 name: Deploy
 
 on:
-  # release:
-  #   types:
-  #     - "published"
-  pull_request:
-    branches: ["main"]
+  release:
+    types:
+      - "published"
 
 jobs:
   build-binary:
@@ -30,10 +28,6 @@ jobs:
           echo "Version: $VERSION"
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
 
-      - name: Test
-        run: |
-          echo "Env Version: ${{ env.VERSION }}"
-
       - name: Build
         run: go build -ldflags="-w -X 'github.com/ev-the-dev/tmplts/cmd.version=${{ env.VERSION }}'" -o bin/tmplts
 
@@ -43,34 +37,34 @@ jobs:
           name: go_binary
           path: bin/tmplts
   
-  # publish-binary:
-  #   runs-on: ubuntu-latest
-  #   needs: build-binary
-  #   defaults:
-  #     run:
-  #       working-directory: ./npm
-  #   permissions:
-  #     contents: read
-  #     id-token: write
+  publish-binary:
+    runs-on: ubuntu-latest
+    needs: build-binary
+    defaults:
+      run:
+        working-directory: ./npm
+    permissions:
+      contents: read
+      id-token: write
 
-  #   steps:
-  #     - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - name: Set Up Node
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: latest
-  #         registry-url: https://registry.npmjs.org/
-  #         scope: "@ev-the-dev"
+      - name: Set Up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
+          registry-url: https://registry.npmjs.org/
+          scope: "@ev-the-dev"
 
-  #     - name: Download Binary
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: go_binary
-  #         path: npm/tmplts
+      - name: Download Binary
+        uses: actions/download-artifact@v4
+        with:
+          name: go_binary
+          path: npm/tmplts
 
-  #     - name: Publish to NPM Registry
-  #       run: |
-  #         npm publish --provenance
-  #       env:
-  #         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish to NPM Registry
+        run: |
+          npm publish --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
