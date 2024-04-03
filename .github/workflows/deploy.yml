@@ -28,14 +28,14 @@ jobs:
         run: |
           VERSION=$(go run scripts/version.go)
           echo "Version: $VERSION"
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
 
       - name: Test
         run: |
-          echo "local Version: $VERSION"
-          echo "env Version: $(${{env.VERSION}})"
+          echo "Env Version: ${{ env.VERSION }}"
 
       - name: Build
-        run: go build -ldflags="-w -X 'github.com/ev-the-dev/tmplts/cmd.version=$(${{ env.VERSION }})'" -o bin/tmplts
+        run: go build -ldflags="-w -X 'github.com/ev-the-dev/tmplts/cmd.version=${{ env.VERSION }}'" -o bin/tmplts
 
       - name: Upload Binary
         uses: actions/upload-artifact@v4
