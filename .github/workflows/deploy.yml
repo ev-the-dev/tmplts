@@ -63,12 +63,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: go_binary
-          path: npm/tmplts
+          path: tmplts
 
       - name: TEST
         run: |
           ls -alFG
-          ls -alFG npm/
+          ls -alFG ../
 
       # - name: Publish to NPM Registry
       #   run: |
