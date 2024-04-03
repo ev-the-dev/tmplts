@@ -21,6 +21,8 @@ $ tmplts
 ## Roadmap
 * Add Prettier and its config file.
 * Add more CLI options, like --version/-v.
+* Implement checks for existing files in cwd. The tool should not overwrite files, but append to them if they already exist.
+* Simple GitHub deploy workflow adjustment to copy over README and LICENSE into the npm dir prior to publishing.
 * More robust configurations: able to selectively add rulesets to each config, instead of having to opt into the entire file as is.
 * Automated scripts: go ahead and include any necessary, or quality of life, scripts to get an app up-and-running with minimal effort.
 * Add functionality to include popular libraries:
