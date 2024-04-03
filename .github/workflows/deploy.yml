@@ -59,4 +59,6 @@ jobs:
 
       - name: Print Dir Contents
         run: |
+          pwd
+          ls -aL ../
           ls -aL
