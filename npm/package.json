@@ -1,0 +1,27 @@
+{
+  "name": "@ev-the-dev/tmplts",
+  "author": "ev-the-dev",
+  "version": "0.0.2",
+  "description": "TypeScript Project Configuration Bootstrapper",
+  "license": "Apache-2.0",
+  "bin": {
+    "tmplts": "tmplts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ev-the-dev/tmplts.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/ev-the-dev/tmplts#readme",
+  "bugs": {
+    "url": "https://github.com/ev-the-dev/tmplts/issues"
+  },
+  "keywords": [
+    "typescript",
+    "eslint",
+    "jest",
+    "swc"
+  ]
+}
