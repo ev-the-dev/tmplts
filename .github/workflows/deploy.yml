@@ -4,6 +4,8 @@ on:
   release:
     types:
       - "published"
+  pull_request:
+    branches: ["main"]
 
 jobs:
   build-binary:
@@ -63,8 +65,13 @@ jobs:
           name: go_binary
           path: npm/tmplts
 
-      - name: Publish to NPM Registry
+      - name: TEST
         run: |
-          npm publish --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          ls -alFG
+          ls -alFG npm/
+
+      # - name: Publish to NPM Registry
+      #   run: |
+      #     npm publish --provenance
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
