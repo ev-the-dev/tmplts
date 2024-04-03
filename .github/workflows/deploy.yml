@@ -1,11 +1,9 @@
 name: Deploy
 
 on:
-  # release:
-  #   types:
-  #     - "published"
-  pull_request:
-    branches: [ "main" ]
+  release:
+    types:
+      - "published"
 
 jobs:
   build-binary:
