@@ -12,11 +12,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var version string = "023fjk32208231kfajhdfkj23"
+
 var (
 	rootCmd = &cobra.Command{
 		Use: "tmplts",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			printWelcomeMessage()
 			checkForFlags(cmd)
 
 			return nil
@@ -32,6 +33,18 @@ func Execute() {
 }
 
 func checkForFlags(cmd *cobra.Command) error {
+	versionFlag, versionFlagError := cmd.Flags().GetBool("version")
+	if versionFlagError != nil {
+		return versionFlagError
+	}
+
+	if versionFlag {
+		printVersion()
+		return nil
+	}
+
+	printWelcomeMessage()
+
 	allFlag, allFlagErr := cmd.Flags().GetBool("all")
 	if allFlagErr != nil {
 		return allFlagErr
@@ -60,8 +73,13 @@ func checkForFlags(cmd *cobra.Command) error {
 	return nil
 }
 
+func printVersion() {
+	fmt.Printf("TmplTS Version: %s", version)
+}
+
 func init() {
 	rootCmd.Flags().BoolP("all", "a", false, "Auto-Generates all config files")
+	rootCmd.Flags().BoolP("version", "v", false, "Current version of TmplTS CLI")
 }
 
 func printWelcomeMessage() {
