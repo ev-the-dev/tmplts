@@ -29,6 +29,11 @@ jobs:
           VERSION=$(go run scripts/version.go)
           echo "Version: $VERSION"
 
+      - name: Test
+        run: |
+          echo "local Version: $VERSION"
+          echo "env Version: ${{ env.VERSION }}"
+
       - name: Build
         run: go build -ldflags="-w -X 'github.com/ev-the-dev/tmplts/cmd.version=${{ env.VERSION }}'" -o bin/tmplts
 
