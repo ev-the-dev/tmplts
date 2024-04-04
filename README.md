@@ -29,6 +29,9 @@ $ tmplts -h
 ```
 
 ## Roadmap
+
+>📓 Follow the progress of roadmap items at this **[Trello Board](https://trello.com/b/row1fgVz)**
+
 * Add Prettier and its config file.
 * Add more CLI options, like --version/-v.
 * Implement checks for existing files in cwd. The tool should not overwrite files, but append to them if they already exist.
