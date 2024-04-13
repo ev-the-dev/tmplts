@@ -33,9 +33,6 @@ jobs:
       - name: Build
         run: CGO_ENABLED=0 go build -ldflags="-w -X 'github.com/ev-the-dev/tmplts/cmd.version=${{ env.VERSION }}'" -o bin/tmplts
 
-      - name: Copy Files
-        run: cp README.md LICENSE npm/
-          
       - name: Upload Binary
         uses: actions/upload-artifact@v4
         with:
@@ -68,10 +65,8 @@ jobs:
           name: go_binary
           path: npm
 
-      - name: TEST
-        run: |
-          ls -alFG
-          ls -alFG ../
+      - name: Copy Files
+        run: cp ../README.md ../LICENSE /
 
       - name: Publish to NPM Registry
         run: |
