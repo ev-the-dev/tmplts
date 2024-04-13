@@ -32,7 +32,6 @@ $ tmplts -h
 
 >📓 Follow the progress of roadmap items at this **[Trello Board](https://trello.com/b/row1fgVz)**
 
-* Add Prettier and its config file.
 * Implement checks for existing files in cwd. The tool should not overwrite files, but append to them if they already exist.
 * Simple GitHub deploy workflow adjustment to copy over README and LICENSE into the npm dir prior to publishing.
 * Provide alternative ways to install binaries other than via the npm registry -- i.e. curl, brew, apt, etc.
