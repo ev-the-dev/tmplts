@@ -37,6 +37,7 @@ func New() *models.UserAnswers {
 			models.ES_BUILD:   false,
 			models.ES_LINT:    false,
 			models.JEST:       false,
+			models.PRETTIER:   false,
 			models.SWC:        false,
 			models.TYPESCRIPT: false,
 		},
@@ -56,6 +57,7 @@ func New() *models.UserAnswers {
 		EsBuild:    updatedW.selected[models.ES_BUILD],
 		EsLint:     updatedW.selected[models.ES_LINT],
 		Jest:       updatedW.selected[models.JEST],
+		Prettier:   updatedW.selected[models.PRETTIER],
 		Swc:        updatedW.selected[models.SWC],
 		Typescript: updatedW.selected[models.TYPESCRIPT],
 	}
@@ -131,6 +133,8 @@ func mapSelectedKeyToName(key int) string {
 		return "ESLint"
 	case models.JEST:
 		return "Jest"
+	case models.PRETTIER:
+		return "Prettier"
 	case models.SWC:
 		return "SWC"
 	case models.TYPESCRIPT:

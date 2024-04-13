@@ -75,6 +75,14 @@ func GenerateAll(userAnswers *models.UserAnswers, cwd string) {
 		pkgJsonConfig.AddDevDependencies(userAnswers.ListEsLintDevDependencies())
 	}
 
+	// PRETTIER
+	if userAnswers.Prettier {
+		fmt.Println("\n### Generating Prettier Config ###")
+		wg.Add(1)
+		go GeneratePrettierConfig(cwd)
+		pkgJsonConfig.AddDevDependencies(userAnswers.ListPrettierDevDependencies())
+	}
+
 	// Populate Package.json
 	pkgJsonTmpl := template.Must(template.New("pkgjson").Parse(ct.PkgJsonTemplate))
 	pkgJsonMarshalled, err := pkgJsonConfig.MarshallData()
@@ -115,6 +123,23 @@ func GenerateJestConfig(cwd string) error {
 	jestTmpl.Execute(w, "")
 
 	fmt.Println("\n~~~Done Generating Jest Config~~~")
+	wg.Done()
+	return nil
+}
+
+func GeneratePrettierConfig(cwd string) error {
+	w, err := os.Create(fmt.Sprintf("%s/.prettierrc", cwd))
+	if err != nil {
+		fmt.Printf("\nUnable to create .prettierrc file: (%v)", err)
+		return err
+	}
+	defer w.Close()
+
+	prettierTmpl := template.Must(template.New("prettierconfig").Parse(ct.PrettierConfigTemplate))
+
+	prettierTmpl.Execute(w, "")
+
+	fmt.Println("\n~~~Done Generating Prettier Config~~~")
 	wg.Done()
 	return nil
 }

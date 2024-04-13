@@ -4,6 +4,7 @@ const (
 	ES_BUILD int = iota
 	ES_LINT
 	JEST
+	PRETTIER
 	SWC
 	TYPESCRIPT
 )
@@ -13,6 +14,7 @@ type UserAnswers struct {
 	EsBuild    bool
 	EsLint     bool
 	Jest       bool
+	Prettier   bool
 	Swc        bool
 	Typescript bool
 }
@@ -198,4 +200,20 @@ func (u *UserAnswers) ListEsLintScripts() []Script {
 		},
 	}
 	return scripts
+}
+
+/*
+*
+* PRETTIER
+*
+ */
+func (u *UserAnswers) ListPrettierDevDependencies() []Dependency {
+	deps := []Dependency{
+		{
+			Key:   "prettier",
+			Value: "^3.2.5",
+		},
+	}
+
+	return deps
 }
