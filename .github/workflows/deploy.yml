@@ -66,7 +66,7 @@ jobs:
           path: npm
 
       - name: Copy Files
-        run: cp ../README.md ../LICENSE /
+        run: cp ../README.md ../LICENSE ./
 
       - name: Publish to NPM Registry
         run: |
