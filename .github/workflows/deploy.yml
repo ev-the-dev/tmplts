@@ -4,8 +4,8 @@ on:
   release:
     types:
       - "published"
-  pull_request:
-    branches: ["main"]
+  # pull_request:
+  #   branches: ["main"]
 
 jobs:
   build-binary:
@@ -35,11 +35,6 @@ jobs:
 
       - name: Copy Files
         run: cp README.md LICENSE npm/
-
-      - name: ECHO Copy Files
-        run: |
-          ls -aLFG npm/
-          cat npm/README.md
           
       - name: Upload Binary
         uses: actions/upload-artifact@v4
@@ -47,39 +42,39 @@ jobs:
           name: go_binary
           path: bin/tmplts
   
-  # publish-binary:
-  #   runs-on: ubuntu-latest
-  #   needs: build-binary
-  #   defaults:
-  #     run:
-  #       working-directory: ./npm
-  #   permissions:
-  #     contents: read
-  #     id-token: write
+  publish-binary:
+    runs-on: ubuntu-latest
+    needs: build-binary
+    defaults:
+      run:
+        working-directory: ./npm
+    permissions:
+      contents: read
+      id-token: write
 
-  #   steps:
-  #     - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - name: Set Up Node
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: latest
-  #         registry-url: https://registry.npmjs.org/
-  #         scope: "@ev-the-dev"
+      - name: Set Up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
+          registry-url: https://registry.npmjs.org/
+          scope: "@ev-the-dev"
 
-  #     - name: Download Binary
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: go_binary
-  #         path: npm
+      - name: Download Binary
+        uses: actions/download-artifact@v4
+        with:
+          name: go_binary
+          path: npm
 
-  #     - name: TEST
-  #       run: |
-  #         ls -alFG
-  #         ls -alFG ../
+      - name: TEST
+        run: |
+          ls -alFG
+          ls -alFG ../
 
-  #     - name: Publish to NPM Registry
-  #       run: |
-  #         npm publish --provenance
-  #       env:
-  #         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish to NPM Registry
+        run: |
+          npm publish --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
