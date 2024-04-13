@@ -1,7 +1,7 @@
 {
   "name": "@ev-the-dev/tmplts",
   "author": "ev-the-dev",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "TypeScript Project Configuration Bootstrapper",
   "license": "Apache-2.0",
   "bin": {
