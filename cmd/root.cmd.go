@@ -61,6 +61,7 @@ func checkForFlags(cmd *cobra.Command) error {
 			AppName:    defaultAppName,
 			EsLint:     true,
 			Jest:       true,
+			Prettier:   true,
 			Swc:        true,
 			Typescript: true,
 		}
@@ -74,7 +75,7 @@ func checkForFlags(cmd *cobra.Command) error {
 }
 
 func printVersion() {
-	fmt.Printf("TmplTS Version: %s", version)
+	fmt.Println(version)
 }
 
 func init() {
