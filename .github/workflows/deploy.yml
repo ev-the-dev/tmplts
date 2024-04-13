@@ -35,6 +35,11 @@ jobs:
 
       - name: Copy Files
         run: cp README.md LICENSE npm/
+
+      - name: ECHO Copy Files
+        run: |
+          ls -aLFG npm/
+          cat npm/README.md
           
       - name: Upload Binary
         uses: actions/upload-artifact@v4
