@@ -70,7 +70,6 @@ func (w WizardAnswers) Init() tea.Cmd {
 }
 
 func (w WizardAnswers) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	// not working
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
 		w.height = msg.Height

@@ -93,7 +93,6 @@ func printWelcomeMessage() {
 
 func requestUserInput() {
 	wizardAnswers := tui.New()
-	fmt.Printf("WIZARD ANSWERS::: \n%+v", wizardAnswers)
 	writeFiles(wizardAnswers)
 }
 
@@ -103,5 +102,6 @@ func writeFiles(userInput *models.UserAnswers) {
 		log.Fatalf("Unable to Get Working Directory: %v", err)
 	}
 	fmt.Printf("\nCWD:::%v", dir)
+	// TODO: Check for conflicts -- perhaps another util?
 	utils.GenerateAll(userInput, dir)
 }
