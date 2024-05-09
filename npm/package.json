@@ -5,7 +5,7 @@
   "description": "TypeScript Project Configuration Bootstrapper",
   "license": "Apache-2.0",
   "bin": {
-    "tmplts": "tmplts"
+    "tmplts": "bin/tmplts"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,11 @@
   "homepage": "https://github.com/ev-the-dev/tmplts#readme",
   "bugs": {
     "url": "https://github.com/ev-the-dev/tmplts/issues"
+  },
+  "optionalDependencies": {
+    "@tmplts/darwin-arm64",
+    "@tmplts/darwin-x64",
+    "@tmplts/linux-x64"
   },
   "keywords": [
     "typescript",

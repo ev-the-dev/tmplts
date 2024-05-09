@@ -8,14 +8,14 @@ GO_FLAGS += -trimpath
 # CLI Version
 VERSION = "9000.0.1"
 
-build: version 
-	CGO_ENABLED=0 go build $(GO_FLAGS)
-
 version: npm/package.json
-	go run scripts/version.go
+	VERSION=$(go run scripts/version.go)
 
+  ##############
+ # Publishing #
+##############
 .PHONY: publish-all
-publish-all:
+publish-all: version
 	@npm --version > /dev/null || (echo "The 'npm' command must be in your path to publish" && false)
 	@echo "Checking for uncommitted & untracked changes..." && test -z "`git status --porcelain | grep 'M'" || \
 		(echo "Cannot publish with uncommited/untracked changes:" && \
@@ -24,4 +24,36 @@ publish-all:
 		(echo "Cannot publish from non-main branch `git rev-parse --abbrev-ref HEAD`" && false)
 	@echo "Checking for unpushed commits..." && git fetch
 	@test "" = "`git cherry`" || (echo "Cannot publish with unpushed commits" && false)
-	
+
+	@$(MAKE) --no-print-directory -j3 \
+		publish-darwin-arm64 \
+		publish-darwin-x64 \
+		publish-linux-x64
+
+publish-darwin-arm64: platform-darwin-arm64
+	cd npm/@tmplts/darwin-arm64 && npm publish
+
+publish-darwin-x64: platform-darwin-x64
+	cd npm/@tmplts/darwin-x64 && npm publish
+
+publish-linux-x64: platform-linux-x64
+	cd npm/@tmplts/linux-x64 && npm publish
+
+
+  ##################
+ # Platform Build #
+##################
+platform-unixlike:
+	@test -n "$(GOOS)" || (echo "The environment variable GOOS must be provided" && false)
+	@test -n "$(GOARCH)" || (echo "The environment variable GOARCH must be provided" && false)
+	@test -n "$(NPMDIR)" || (echo "The environment variable NPMDIR must be provided" && false)
+	CGO_ENABLED=0 GOOS="$(GOOS)" GOARCH="$(GOARCH)" go build $(GO_FLAGS) -o "$(NPMDIR)/bin/tmplts"
+
+platform-darwin-arm64:
+	@$(MAKE) --no-print-directory GOOS=darwin GOARCH=arm64 NPMDIR=npm/@tmplts/darwin-arm64 platform-unixlike
+
+platform-darwin-x64:
+	@$(MAKE) --no-print-directory GOOS=darwin GOARCH=amd64 NPMDIR=npm/@tmplts/darwin-x64 platform-unixlike
+
+platform-linux-x64:
+	@$(MAKE) --no-print-directory GOOS=linux GOARCH=amd64 NPMDIR=npm/@tmplts/linux-x64 platform-unixlike
