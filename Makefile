@@ -39,10 +39,11 @@ copy-files:
 ##############
 .PHONY: publish-all
 publish-all: copy-files
+	@echo "Attempting to publish all supported binaries..."
 	@npm --version > /dev/null || (echo "The 'npm' command must be in your path to publish" && false)
-	@echo "Checking for uncommitted & untracked changes..." && test -z "`git status --porcelain | grep 'M'" || \
+	@echo "Checking for uncommitted & untracked changes..." && test -z "`git status --porcelain | grep -vE '(README\.md|LICENSE)'`" || \
 		(echo "Cannot publish with uncommited/untracked changes:" && \
-		git status --porcelain | grep 'M' && false)
+		git status --porcelain | grep -vE '(README\.md|LICENSE)' && false)
 	@echo "Checking for main branch..." && test main = "`git rev-parse --abbrev-ref HEAD`" || \
 		(echo "Cannot publish from non-main branch `git rev-parse --abbrev-ref HEAD`" && false)
 	@echo "Checking for unpushed commits..." && git fetch
