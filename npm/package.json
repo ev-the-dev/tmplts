@@ -13,6 +13,9 @@
     "README.md",
     "bin/tmplts"
   ],
+  "scripts": {
+    "postinstall": "node install.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ev-the-dev/tmplts.git"
@@ -25,9 +28,9 @@
     "url": "https://github.com/ev-the-dev/tmplts/issues"
   },
   "optionalDependencies": {
-    "@tmplts/darwin-arm64",
-    "@tmplts/darwin-x64",
-    "@tmplts/linux-x64"
+    "@tmplts/darwin-arm64": "0.1.0",
+    "@tmplts/darwin-x64": "0.1.0",
+    "@tmplts/linux-x64": "0.1.0"
   },
   "keywords": [
     "typescript",
