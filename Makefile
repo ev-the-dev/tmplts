@@ -12,18 +12,33 @@ version:
 
 .PHONY clean:
 clean:
+	rm -f npm/README.md npm/LICENSE &&\
+		rm -rf npm/bin
+
 	cd npm/@tmplts && \
-		rm -r \
+		rm -rf \
 		darwin-arm64/bin \
 		darwin-x64/bin \
 		linux-x64/bin
 
+	cd npm/@tmplts && \
+		rm -f\
+		darwin-arm64/README.md darwin-arm64/LICENSE \
+		darwin-x64/README.md darwin-x64/LICENSE \
+		linux-x64/README.md linux-x64/LICENSE
+
+.PHONY copy-files:
+copy-files:
+	cp README.md LICENSE npm/
+	cp README.md LICENSE npm/@tmplts/darwin-arm64/
+	cp README.md LICENSE npm/@tmplts/darwin-x64/
+	cp README.md LICENSE npm/@tmplts/linux-x64/
 
   ##############
  # Publishing #
 ##############
 .PHONY: publish-all
-publish-all:
+publish-all: copy-files
 	@npm --version > /dev/null || (echo "The 'npm' command must be in your path to publish" && false)
 	@echo "Checking for uncommitted & untracked changes..." && test -z "`git status --porcelain | grep 'M'" || \
 		(echo "Cannot publish with uncommited/untracked changes:" && \
