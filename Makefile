@@ -10,16 +10,20 @@ GO_FLAGS += -trimpath
 version: 
 	@echo "Version: $(VERSION)"
 
-# .PHONY clean:
-# clean:
-# 	rm -r npm/@tmplts/darwin-arm64/bin
+.PHONY clean:
+clean:
+	cd npm/@tmplts && \
+		rm -r \
+		darwin-arm64/bin \
+		darwin-x64/bin \
+		linux-x64/bin
 
 
   ##############
  # Publishing #
 ##############
 .PHONY: publish-all
-publish-all: version
+publish-all:
 	@npm --version > /dev/null || (echo "The 'npm' command must be in your path to publish" && false)
 	@echo "Checking for uncommitted & untracked changes..." && test -z "`git status --porcelain | grep 'M'" || \
 		(echo "Cannot publish with uncommited/untracked changes:" && \
@@ -66,5 +70,5 @@ platform-darwin-arm64:
 platform-darwin-x64:
 	@$(MAKE) --no-print-directory GOOS=darwin GOARCH=amd64 NPMDIR=npm/@tmplts/darwin-x64 platform-unixlike
 
-platform-linux-x64: version
+platform-linux-x64:
 	@$(MAKE) --no-print-directory GOOS=linux GOARCH=amd64 NPMDIR=npm/@tmplts/linux-x64 platform-unixlike
