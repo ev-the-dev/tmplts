@@ -28,9 +28,9 @@
     "url": "https://github.com/ev-the-dev/tmplts/issues"
   },
   "optionalDependencies": {
-    "@tmplts/darwin-arm64": "0.1.0",
-    "@tmplts/darwin-x64": "0.1.0",
-    "@tmplts/linux-x64": "0.1.0"
+    "@tmplts/darwin-arm64": "0.1.1",
+    "@tmplts/darwin-x64": "0.1.1",
+    "@tmplts/linux-x64": "0.1.1"
   },
   "keywords": [
     "typescript",
