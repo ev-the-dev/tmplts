@@ -31,7 +31,7 @@ publish-all: version
 		publish-darwin-x64 \
 		publish-linux-x64
 
-publish-default: platform-default:
+publish-default: platform-default
 	cd npm && npm publish
 
 publish-darwin-arm64: platform-darwin-arm64
