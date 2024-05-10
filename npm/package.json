@@ -1,7 +1,7 @@
 {
   "name": "@ev-the-dev/tmplts",
   "author": "ev-the-dev",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "TypeScript Project Configuration Bootstrapper",
   "license": "Apache-2.0",
   "bin": {
@@ -11,7 +11,8 @@
     "package.json",
     "LICENSE",
     "README.md",
-    "bin/tmplts"
+    "bin/tmplts",
+    "install.js"
   ],
   "scripts": {
     "postinstall": "node install.js"
@@ -28,9 +29,9 @@
     "url": "https://github.com/ev-the-dev/tmplts/issues"
   },
   "optionalDependencies": {
-    "@tmplts/darwin-arm64": "0.1.1",
-    "@tmplts/darwin-x64": "0.1.1",
-    "@tmplts/linux-x64": "0.1.1"
+    "@tmplts/darwin-arm64": "0.1.2",
+    "@tmplts/darwin-x64": "0.1.2",
+    "@tmplts/linux-x64": "0.1.2"
   },
   "keywords": [
     "typescript",
