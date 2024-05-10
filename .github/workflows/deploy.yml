@@ -63,7 +63,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: go_binary
-          path: npm
+          path: npm/bin
 
       - name: Copy Files
         run: cp ../README.md ../LICENSE ./
