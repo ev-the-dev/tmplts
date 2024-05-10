@@ -7,6 +7,12 @@
   "bin": {
     "tmplts": "bin/tmplts"
   },
+  "files": [
+    "package.json",
+    "LICENSE",
+    "README.md",
+    "bin/tmplts"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ev-the-dev/tmplts.git"

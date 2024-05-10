@@ -25,10 +25,14 @@ publish-all: version
 	@echo "Checking for unpushed commits..." && git fetch
 	@test "" = "`git cherry`" || (echo "Cannot publish with unpushed commits" && false)
 
-	@$(MAKE) --no-print-directory -j3 \
+	@$(MAKE) --no-print-directory -j4 \
+		publish-default \
 		publish-darwin-arm64 \
 		publish-darwin-x64 \
 		publish-linux-x64
+
+publish-default: platform-default:
+	cd npm && npm publish
 
 publish-darwin-arm64: platform-darwin-arm64
 	cd npm/@tmplts/darwin-arm64 && npm publish
@@ -48,6 +52,9 @@ platform-unixlike:
 	@test -n "$(GOARCH)" || (echo "The environment variable GOARCH must be provided" && false)
 	@test -n "$(NPMDIR)" || (echo "The environment variable NPMDIR must be provided" && false)
 	CGO_ENABLED=0 GOOS="$(GOOS)" GOARCH="$(GOARCH)" go build $(GO_FLAGS) -o "$(NPMDIR)/bin/tmplts"
+
+platform-default:
+	@$(MAKE) --no-print-directory GOOS=darwin GOARCH=arm64 NPMDIR=npm platform-unixlike
 
 platform-darwin-arm64:
 	@$(MAKE) --no-print-directory GOOS=darwin GOARCH=arm64 NPMDIR=npm/@tmplts/darwin-arm64 platform-unixlike
