@@ -21,10 +21,10 @@ function getPkgAndPathForPlatform() {
 
 function main() {
   const pkgPath = getPkgAndPathForPlatform()
-  const binSubPath = "bin/esbuild"
+  const binSubPath = "bin/tmplts"
 
   const binFullPath = require.resolve(`${pkgPath}/${binSubPath}`)
-  const tempPath = path.join(__dirname, "bin-esbuild")
+  const tempPath = path.join(__dirname, "bin-tmplts")
   try {
     /*
      * First: linking binary with temp file.
@@ -37,11 +37,14 @@ function main() {
     fs.renameSync(tempPath, path.join(__dirname, "bin", "tmplts"))
 
     /*
-     * Third: Remove temp file
+     * Third: Remove temp file if it still exists
      */
-    fs.unlinkSync(tempPath)
+    if(fs.existsSync(tempPath)){
+      fs.unlinkSync(tempPath)
+    }
   } catch (e) {
     console.error("Failed to swap out default binary with platform compatible one:\nERROR:", e)
   }
 }
 
+main()
