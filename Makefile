@@ -1,3 +1,4 @@
+VERSION := $(shell go run scripts/version.go)
 # Strip debug info (symbol table and DWARF)
 # Also add version info to binary
 GO_FLAGS += "-ldflags=-s -w -X 'github.com/ev-the-dev/tmplts/cmd.version=$(VERSION)'"
@@ -5,11 +6,14 @@ GO_FLAGS += "-ldflags=-s -w -X 'github.com/ev-the-dev/tmplts/cmd.version=$(VERSI
 # Avoid embedding build path in executable
 GO_FLAGS += -trimpath
 
-# CLI Version
-VERSION = "9000.0.1"
+.PHONY version:
+version: 
+	@echo "Version: $(VERSION)"
 
-version: npm/package.json
-	VERSION=$(go run scripts/version.go)
+# .PHONY clean:
+# clean:
+# 	rm -r npm/@tmplts/darwin-arm64/bin
+
 
   ##############
  # Publishing #
@@ -62,5 +66,5 @@ platform-darwin-arm64:
 platform-darwin-x64:
 	@$(MAKE) --no-print-directory GOOS=darwin GOARCH=amd64 NPMDIR=npm/@tmplts/darwin-x64 platform-unixlike
 
-platform-linux-x64:
+platform-linux-x64: version
 	@$(MAKE) --no-print-directory GOOS=linux GOARCH=amd64 NPMDIR=npm/@tmplts/linux-x64 platform-unixlike
