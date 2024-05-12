@@ -1,8 +1,8 @@
 {
-  "name": "@tmplts/darwin-x64",
+  "name": "@tmplts/windows-arm64",
   "author": "ev-the-dev",
   "version": "0.1.3",
-  "description": "MacOS AMD 64-bit (Intel) binary for TmplTS",
+  "description": "Windows ARM 64-bit binary for TmplTS",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -12,9 +12,9 @@
     "access": "public"
   },
   "os": [
-    "darwin"
+    "win32"
   ],
   "cpu": [
-    "x64"
+    "arm64"
   ]
 }
