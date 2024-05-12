@@ -66,7 +66,10 @@ publish-all: copy-files
 		publish-default \
 		publish-darwin-arm64 \
 		publish-darwin-x64 \
-		publish-linux-x64
+		publish-linux-x64 \
+		publish-windows-arm64 \
+		publish-windows-ia32 \
+		publish-windows-x64
 
 publish-default: platform-default
 	cd npm && npm publish
