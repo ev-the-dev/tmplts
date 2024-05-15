@@ -14,6 +14,9 @@ GO_FLAGS += -trimpath
 version: 
 	@echo "Version: $(VERSION)"
 
+.PHONY all:
+all: | publish-all clean
+
 .PHONY clean:
 clean:
 	rm -f npm/README.md npm/LICENSE &&\
@@ -47,9 +50,11 @@ copy-files:
 	cp README.md LICENSE npm/@tmplts/windows-ia32/
 	cp README.md LICENSE npm/@tmplts/windows-x64/
 
+
   ##############
  # Publishing #
 ##############
+
 .PHONY: publish-all
 publish-all: copy-files
 	@echo "Attempting to publish all supported binaries..."
@@ -96,6 +101,19 @@ publish-windows-x64: platform-windows-x64
   ##################
  # Platform Build #
 ##################
+.PHONY: platform-all:
+platform-all:
+	@echo "Attempting to generate all supported platform binaries..."
+
+	@$(MAKE) --no-print-directory -j4 \
+		platform-default \
+		platform-darwin-arm64 \
+		platform-darwin-x64 \
+		platform-linux-x64 \
+		platform-windows-arm64 \
+		platform-windows-ia32 \
+		platform-windows-x64
+
 platform-unixlike:
 	@test -n "$(TGOOS)" || (echo "The environment variable GOOS must be provided" && false)
 	@test -n "$(TGOARCH)" || (echo "The environment variable GOARCH must be provided" && false)
