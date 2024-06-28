@@ -101,7 +101,7 @@ publish-windows-x64: platform-windows-x64
   ##################
  # Platform Build #
 ##################
-.PHONY: platform-all:
+.PHONY platform-all:
 platform-all:
 	@echo "Attempting to generate all supported platform binaries..."
 
