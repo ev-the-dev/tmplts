@@ -1,7 +1,7 @@
 {
   "name": "@tmplts/linux-x64",
   "author": "ev-the-dev",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Linux 64-bit (Intel) binary for TmplTS",
   "license": "Apache-2.0",
   "repository": {
