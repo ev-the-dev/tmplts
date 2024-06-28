@@ -3,20 +3,35 @@ package templates
 var TsConfigTemplate = `{
   "extends": "@tsconfig/node18/tsconfig.json",
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "allowJs": false,
+    "allowUnreachableCode": false,
+    "alwaysStrict": true,
     "baseUrl": ".",
-    "rootDir": ".",
-    "outDir": "dist",
-    "moduleResolution": "nodenext",
+    "checkJs": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["esnext"],
     "module": "nodenext",
-    "target": "ES6",
+    "moduleResolution": "nodenext",
+    "noEmit": true,
+    "noErrorTruncation": true,
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "outDir": "dist",
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "rootDir": ".",
+    "strict": true,
+    "target": "esnext",
     "paths": {
       "@example/*": ["some/relative/path/*"],
-    },
-    "noEmit": true,
-    "resolveJsonModule": true,
-    "allowJs": false,
-    "checkJs": false,
-    "noImplicitAny": true
+    }
   },
   "include": ["./**/package.json", "layers/**/*", "src/**/*", "e2e/**/*"],
   "exclude": ["node_modules", "coverage", "__snapshots__", "docs/**", "dist/**"]
@@ -26,11 +41,7 @@ var TsConfigTemplate = `{
 var TsConfigBuildTemplate = `{
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "dist",
-    "noEmit": false,
-    "target": "ES6",
-    "module": "nodenext",
-    "esModuleInterop": true
+    "noEmit": false
   },
   "exclude": [
     "node_modules",
@@ -51,10 +62,6 @@ var TsConfigDevTemplate = `{
   "ts-node": {
     "require": ["tsconfig-paths/register"],
     "swc": true,
-    "files": true,
-    "compilerOptions": {
-      "module": "CommonJS",
-      "target": "ES2017"
-    }
+    "files": true
   }
 }`

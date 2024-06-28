@@ -169,15 +169,29 @@ func GenerateTsConfig(cwd string) error {
 	}
 	defer w.Close()
 
+	wB, errB := os.Create(fmt.Sprintf("%s/tsconfig.build.json", cwd))
+	if errB != nil {
+		fmt.Printf("\nUnable to create tsconfig.build.json file: (%v)", errB)
+		return errB
+	}
+	defer wB.Close()
+
+	wD, errD := os.Create(fmt.Sprintf("%s/tsconfig.dev.json", cwd))
+	if errD != nil {
+		fmt.Printf("\nUnable to create tsconfig.dev.json file: (%v)", errD)
+		return errD
+	}
+	defer wD.Close()
+
 	tsTmpl := template.Must(template.New("tsconfig").Parse(ct.TsConfigTemplate))
 	tsBuildTmpl := template.Must(template.New("tsconfigbuild").Parse(ct.TsConfigBuildTemplate))
 	tsDevTmpl := template.Must(template.New("tsconfigdev").Parse(ct.TsConfigDevTemplate))
 
 	tsTmpl.Execute(w, "")
-	tsBuildTmpl.Execute(w, "")
-	tsDevTmpl.Execute(w, "")
+	tsBuildTmpl.Execute(wB, "")
+	tsDevTmpl.Execute(wD, "")
 
-	fmt.Println("\n~~~Done Generating TsConfig~~~")
+	fmt.Println("\n~~~Done Generating TsConfigs~~~")
 	wg.Done()
 	return nil
 }
