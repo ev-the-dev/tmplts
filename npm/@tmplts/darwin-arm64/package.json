@@ -1,7 +1,7 @@
 {
   "name": "@tmplts/darwin-arm64",
   "author": "ev-the-dev",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "MacOS ARM 64-bit (Mac Silicon) binary for TmplTS",
   "license": "Apache-2.0",
   "repository": {
