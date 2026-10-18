@@ -10,14 +10,14 @@ GO_FLAGS += "-ldflags=-s -w -X 'github.com/ev-the-dev/tmplts/cmd.version=$(VERSI
 # Avoid embedding build path in executable
 GO_FLAGS += -trimpath
 
-.PHONY version:
+.PHONY: version
 version: 
 	@echo "Version: $(VERSION)"
 
-.PHONY all:
+.PHONY: all
 all: | publish-all clean
 
-.PHONY clean:
+.PHONY: clean
 clean:
 	rm -f npm/README.md npm/LICENSE &&\
 		rm -rf npm/bin
@@ -40,7 +40,7 @@ clean:
 		windows-ia32/README.md windows-ia32/LICENSE \
 		windows-x64/README.md windows-x64/LICENSE
 
-.PHONY copy-files:
+.PHONY: copy-files
 copy-files:
 	cp README.md LICENSE npm/
 	cp README.md LICENSE npm/@tmplts/darwin-arm64/
@@ -101,7 +101,7 @@ publish-windows-x64: platform-windows-x64
   ##################
  # Platform Build #
 ##################
-.PHONY platform-all:
+.PHONY: platform-all
 platform-all:
 	@echo "Attempting to generate all supported platform binaries..."
 
